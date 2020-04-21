@@ -16,5 +16,6 @@ public class LeagueInvaders {
 		frame.setDefaultCloseOperation(3);
 		frame.setSize(500, 800);
 		frame.add(game);
+		frame.addKeyListener(game);
 	}
 }

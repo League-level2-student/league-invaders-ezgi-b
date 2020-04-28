@@ -36,7 +36,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     public static final Color STAR = new Color(210,250,230);
     Font titleFont = new Font("Arial", Font.PLAIN,48);
     Font enter_spaceFont = new Font("Arial", Font.PLAIN,24);
-    Rocketship r = new Rocketship(250,700,50,50);
+    Rocketship r = new Rocketship(225,700,50,50);
+    ObjectManager oj = new ObjectManager(r);
     
     
 	
@@ -45,7 +46,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void updateGameState() {
-		
+		oj.update();
 	}
 	
 	void updateEndState() {
@@ -69,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	void drawGameState(Graphics g) {  
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
-		r.draw(g);
+		oj.draw(g);
 	}
 	
 	void drawEndState(Graphics g)  {  
@@ -120,18 +121,30 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		if(currentState == GAME) {
 			if (e.getKeyCode()==KeyEvent.VK_UP) {
 				System.out.println("UP");
+				if(r.y>0) {
+					r.up();
+				}
 			}
 		
 			if (e.getKeyCode()==KeyEvent.VK_DOWN) {
 				System.out.println("DOWN");
+				if(r.y<725) {
+					r.down();
+				}
 			}	
 		
 			if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
 				System.out.println("RIGHT");
+				if(r.x<450) {
+					r.right();
+				}
 			}
 		
 			if (e.getKeyCode()==KeyEvent.VK_LEFT) {
 				System.out.println("LEFT");
+				if(r.x>0) {
+					r.left();
+				}
 			}
 		}
 		

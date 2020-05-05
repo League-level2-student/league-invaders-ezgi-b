@@ -1,11 +1,14 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,7 +25,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}
 	}
 	
+	public static Image image;
+	
 	Timer frameDraw;
+	Timer alienSpawn;
 	GamePanel(){
 		frameDraw = new Timer(1000/60,this);
 		frameDraw.start();
@@ -68,8 +74,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	void drawGameState(Graphics g) {  
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT);
+		loadImage("space.png");
+		g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);
 		oj.draw(g);
 	}
 	
@@ -86,7 +92,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		g.setColor(STAR);
 		g.drawString("Press ENTER to restart", 120, 550);
 	}
-
+	
+	void startGame() {
+		alienSpawn = new Timer(1000, oj);
+	    alienSpawn.start();
+	}
+	void stopGame() {
+	    alienSpawn.stop();
+	}
+	
+	void loadImage(String imageFile) {
+		try {
+			image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		} catch (Exception e) {
+	            
+	    }
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -114,8 +136,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
-		    } else {
-		        currentState++;
+		    } else if (currentState == MENU) {
+		        currentState = GAME;
+		        startGame();
+		    } else if (currentState == GAME) {
+		        currentState = END;
+		        stopGame();
 		    }
 		}
 		if(currentState == GAME) {
@@ -145,6 +171,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 				if(r.x>0) {
 					r.left();
 				}
+			}
+			if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+				System.out.println("FIYAH!!!!!");
+				oj.addProjectile(r.getProjectile());
 			}
 		}
 		

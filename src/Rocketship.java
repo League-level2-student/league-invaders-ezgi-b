@@ -10,7 +10,7 @@ public class Rocketship extends GameObject{
 	public static boolean gotImage = false;
 	Rocketship(int x, int y, int width, int height){
 		super(x,y,width,height);
-		speed = 9;
+		speed = 15;
 		if (needImage) {
 			loadImage("rocket.png");
 		}
@@ -25,15 +25,19 @@ public class Rocketship extends GameObject{
 	}	
 	public void right() {
 		x+=speed;
+		super.update();
 	}
 	public void left() {
 		x-=speed;
+		super.update();
 	}
 	public void down() {
 		y+=speed;
+		super.update();
 	}
 	public void up() {
 		y-=speed;
+		super.update();
 	}
 	
 	void loadImage(String imageFile) {

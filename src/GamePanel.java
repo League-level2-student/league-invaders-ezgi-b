@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	final int MENU = 0;
     final int GAME = 1;
     final int END = 2;
-    int currentState = MENU;
+    public int currentState = MENU;
     public static final Color NIGHT_SKY = new Color(30,10,90);
     public static final Color STAR = new Color(210,250,230);
     Font titleFont = new Font("Arial", Font.PLAIN,48);
@@ -48,11 +48,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
     
 	
     void updateMenuState() {
-		
+   
 	}
 	
 	void updateGameState() {
 		oj.update();
+		if(r.isActive==false) {
+			currentState = END;
+			System.out.println("endendend");
+		}
 	}
 	
 	void updateEndState() {
@@ -120,7 +124,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		    updateEndState();
 		}
 		
-		System.out.println("action");
+		
 		repaint();
 	}
 

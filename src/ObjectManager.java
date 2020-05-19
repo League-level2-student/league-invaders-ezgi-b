@@ -6,8 +6,10 @@ import java.util.Random;
 
 public class ObjectManager implements ActionListener{
 	Rocketship rocket;
+	int score;
 	ObjectManager(Rocketship s){
 		rocket = s;
+		score = 0;
 	}
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	
@@ -36,6 +38,8 @@ ArrayList<Alien> aliens = new ArrayList<Alien>();
 				p.isActive=false;
 			}
 		}
+		checkCollision();
+		purgeObjects();
 	}
 	
 	void draw(Graphics g) {
@@ -59,6 +63,27 @@ ArrayList<Alien> aliens = new ArrayList<Alien>();
 				projectiles.remove(i);
 			}
 		}
+	}
+	void checkCollision() {
+		for(Alien a: aliens) {
+			for(Projectile p: projectiles) {
+				if(a.collisionBox.intersects(p.collisionBox)) {
+					a.isActive = false;
+					p.isActive = false;
+					score++;
+				}
+			}
+		}
+		for(Alien a: aliens) {
+				if(a.collisionBox.intersects(rocket.collisionBox)) {
+					a.isActive = false;
+					rocket.isActive = false;
+				}
+		}
+	}
+	
+	int getScore() {
+		return score;
 	}
 	
 

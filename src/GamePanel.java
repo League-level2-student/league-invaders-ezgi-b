@@ -55,7 +55,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		oj.update();
 		if(r.isActive==false) {
 			currentState = END;
-			System.out.println("endendend");
 		}
 	}
 	
@@ -91,7 +90,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		g.drawString("GAME OVER", 100, 100);
 		g.setFont(enter_spaceFont);
 		g.setColor(STAR);
-		g.drawString("You killed enemies", 145, 350);
+		g.drawString("You killed " + oj.getScore() + " enemies", 145, 350);
 		g.setFont(enter_spaceFont);
 		g.setColor(STAR);
 		g.drawString("Press ENTER to restart", 120, 550);
@@ -139,6 +138,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
+		    	r = new Rocketship(225,700,50,50);
+		    	r.isActive=true;
+			    oj = new ObjectManager(r);
 		        currentState = MENU;
 		    } else if (currentState == MENU) {
 		        currentState = GAME;
@@ -150,34 +152,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 		}
 		if(currentState == GAME) {
 			if (e.getKeyCode()==KeyEvent.VK_UP) {
-				System.out.println("UP");
 				if(r.y>0) {
 					r.up();
 				}
 			}
 		
 			if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-				System.out.println("DOWN");
 				if(r.y<725) {
 					r.down();
 				}
 			}	
 		
 			if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-				System.out.println("RIGHT");
 				if(r.x<450) {
 					r.right();
 				}
 			}
 		
 			if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-				System.out.println("LEFT");
 				if(r.x>0) {
 					r.left();
 				}
 			}
 			if (e.getKeyCode()==KeyEvent.VK_SPACE) {
-				System.out.println("FIYAH!!!!!");
 				oj.addProjectile(r.getProjectile());
 			}
 		}

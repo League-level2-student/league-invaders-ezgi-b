@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +9,8 @@ import java.util.Random;
 public class ObjectManager implements ActionListener{
 	Rocketship rocket;
 	int score;
+	public static final Color STAR = new Color(210,250,230);
+	Font font = new Font("Arial", Font.PLAIN,48);
 	ObjectManager(Rocketship s){
 		rocket = s;
 		score = 0;
@@ -43,6 +47,9 @@ ArrayList<Alien> aliens = new ArrayList<Alien>();
 	}
 	
 	void draw(Graphics g) {
+		g.setColor(STAR);
+		g.setFont(font);
+		g.drawString("Score: " + getScore(), 27, 100);
 		rocket.draw(g);
 		for(Alien a : aliens) {
 			a.draw(g);
